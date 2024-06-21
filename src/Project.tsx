@@ -1,5 +1,5 @@
-import { motion, useMotionValue } from "framer-motion";
-import { useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
 import { styled } from "styled-components";
 
 const Wrapper = styled.div`
@@ -35,10 +35,18 @@ const Box = styled(motion.div)`
   background-color: white;
   opacity: 0.6;
   border-radius: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   place-self: center;
 `;
 
-const Circle = styled(motion.div)``;
+const Circle = styled(motion.div)`
+  border-radius: 50px;
+  height: 40px;
+  width: 40px;
+  background-color: black;
+`;
 
 const boxVariant = {
   hover: (custom: any) => {
@@ -75,18 +83,41 @@ const boxVariant = {
     }
   },
 };
+const circleVariants = {
+  initial: { x: 0, y: 0 },
+  moved: { x: -210, y: 20 },
+};
 
 function Project() {
+  const [change, setChange] = useState(true);
+  const onClick = () => {
+    setChange((current) => !current);
+  };
   return (
     <Wrapper>
-      <Box custom={1} variants={boxVariant} whileHover="hover"></Box>
-      <Box custom={2} variants={boxVariant} whileHover="hover">
-        <Circle />
-      </Box>
-      <Box custom={3} variants={boxVariant} whileHover="hover"></Box>
-      <Box custom={4} variants={boxVariant} whileHover="hover"></Box>
+      <AnimatePresence>
+        <Box custom={1} variants={boxVariant} whileHover="hover"></Box>
+        <Box custom={2} variants={boxVariant} whileHover="hover">
+          <motion.div
+            animate={change ? "initial" : "moved"}
+            variants={circleVariants}
+            transition={{ duration: 0.5 }}
+          >
+            <Circle />
+          </motion.div>
+        </Box>
+        <Box custom={3} variants={boxVariant} whileHover="hover"></Box>
+        <Box custom={4} variants={boxVariant} whileHover="hover"></Box>
+      </AnimatePresence>
       <Btn>
-        <Button whileHover={{ scale: 1.2 }}>Switch</Button>
+        <Button
+          style={{ color: change ? "#e74c3c" : "#2c3e50" }}
+          onClick={onClick}
+          whileTap={{ scale: 1.4 }}
+          whileHover={{ scale: 1.2 }}
+        >
+          Switch
+        </Button>
       </Btn>
     </Wrapper>
   );
