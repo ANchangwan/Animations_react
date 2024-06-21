@@ -1,8 +1,8 @@
 import { motion, useMotionValue } from "framer-motion";
+import { useEffect } from "react";
 import { styled } from "styled-components";
 
 const Wrapper = styled.div`
-  height: 30%;
   width: 30%;
   display: grid;
   grid-template-columns: repeat(2, 200px);
@@ -22,22 +22,28 @@ const Box = styled(motion.div)`
 const Circle = styled(motion.div)``;
 
 const boxVariant = {
-  hover: (custom: number) => ({
-    transition: { scale: custom * 0.2 },
+  hover: ({ x, y }: any) => ({
+    opacity: 1,
+    scaleX: x * 1.2,
+    scaleY: y * 1.2,
   }),
 };
 
 function Project() {
-  const move = useMotionValue(0);
-  const custom = useMotionValue(move);
-  console.log(custom);
+  const x = useMotionValue(1);
+  const y = useMotionValue(1);
+
   return (
     <Wrapper>
-      <Box variants={boxVariant} whileHover="hover"></Box>
+      <Box
+        custom={x}
+        variants={boxVariant}
+        whileHover="hover"
+      ></Box>
       <Box variants={boxVariant} whileHover="hover">
         <Circle />
       </Box>
-      <Box variants={boxVariant} whileHover="hover" custom={custom}></Box>
+      <Box variants={boxVariant} whileHover="hover"></Box>
       <Box variants={boxVariant} whileHover="hover"></Box>
     </Wrapper>
   );
