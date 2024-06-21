@@ -98,15 +98,11 @@ function Project() {
       <AnimatePresence>
         <Box custom={1} variants={boxVariant} whileHover="hover"></Box>
         <Box custom={2} variants={boxVariant} whileHover="hover">
-          <motion.div
-            animate={change ? "initial" : "moved"}
-            variants={circleVariants}
-            transition={{ duration: 0.5 }}
-          >
-            <Circle />
-          </motion.div>
+          {change ? <Circle layoutId="circle" /> : null}
         </Box>
-        <Box custom={3} variants={boxVariant} whileHover="hover"></Box>
+        <Box custom={3} variants={boxVariant} whileHover="hover">
+          {!change ? <Circle layoutId="circle" /> : null}
+        </Box>
         <Box custom={4} variants={boxVariant} whileHover="hover"></Box>
       </AnimatePresence>
       <Btn>

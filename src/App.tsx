@@ -31,44 +31,36 @@ const Box = styled(motion.div)`
 `;
 
 const boxVariants = {
-  start: {
-    x: 500,
-    opacity: 0,
-    scale: 0,
+  entry: (custom: boolean) => {
+    return {
+      x: custom ? -500 : 500,
+      opacity: 0,
+      scale: 0,
+    };
   },
-  end: {
+  center: {
     opacity: 1,
     scale: 1,
     x: 0,
+    transition: { duration: 0.3 },
   },
-  leaving: {
-    x: -500,
-    opacity: 0,
-    scale: 0,
+  exit: (custom: boolean) => {
+    return {
+      x: custom ? 500 : -500,
+      opacity: 0,
+      scale: 0,
+      transition: { duration: 0.3 },
+    };
   },
 };
 
 function App() {
-  const [visible, setVisible] = useState(1);
-  const next = () => setVisible((prev) => (prev === 11 ? 10 : prev + 1));
   return (
     <Wrapper>
-      <AnimatePresence>
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) =>
-          i === visible ? (
-            <Box
-              variants={boxVariants}
-              initial={"start"}
-              animate={"end"}
-              exit={"leaving"}
-              key={i}
-            >
-              {i}
-            </Box>
-          ) : null
-        )}
-      </AnimatePresence>
-      <button onClick={next}>next</button>
+      <Box></Box>
+      <Box></Box>
+      <Box></Box>
+      <Box></Box>
     </Wrapper>
   );
 }
