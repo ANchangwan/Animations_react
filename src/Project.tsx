@@ -10,6 +10,25 @@ const Wrapper = styled.div`
   gap: 10px;
 `;
 
+const Btn = styled.div`
+  grid-column: span 2;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Button = styled(motion.button)`
+  width: 33%;
+  border: none;
+  padding: 10px 15px;
+  background-color: rgba(126, 214, 223, 1);
+  color: white;
+  border-radius: 15px;
+  font-weight: 500;
+  font-size: 25px;
+`;
+
 const Box = styled(motion.div)`
   height: 200px;
   width: 200px;
@@ -22,29 +41,53 @@ const Box = styled(motion.div)`
 const Circle = styled(motion.div)``;
 
 const boxVariant = {
-  hover: ({ x, y }: any) => ({
-    opacity: 1,
-    scaleX: x * 1.2,
-    scaleY: y * 1.2,
-  }),
+  hover: (custom: any) => {
+    switch (custom) {
+      case 1:
+        return {
+          opacity: 1,
+          scale: 1.2,
+          transformOrigin: "bottom right",
+        };
+      case 2:
+        return {
+          opacity: 1,
+          scale: 1.2,
+          transformOrigin: "bottom left",
+        };
+      case 3:
+        return {
+          opacity: 1,
+          scale: 1.2,
+          transformOrigin: "top right",
+        };
+      case 4:
+        return {
+          opacity: 1,
+          scale: 1.2,
+          transformOrigin: "top left",
+        };
+      default:
+        return {
+          opacity: 1,
+          scale: 1.1,
+        };
+    }
+  },
 };
 
 function Project() {
-  const x = useMotionValue(1);
-  const y = useMotionValue(1);
-
   return (
     <Wrapper>
-      <Box
-        custom={x}
-        variants={boxVariant}
-        whileHover="hover"
-      ></Box>
-      <Box variants={boxVariant} whileHover="hover">
+      <Box custom={1} variants={boxVariant} whileHover="hover"></Box>
+      <Box custom={2} variants={boxVariant} whileHover="hover">
         <Circle />
       </Box>
-      <Box variants={boxVariant} whileHover="hover"></Box>
-      <Box variants={boxVariant} whileHover="hover"></Box>
+      <Box custom={3} variants={boxVariant} whileHover="hover"></Box>
+      <Box custom={4} variants={boxVariant} whileHover="hover"></Box>
+      <Btn>
+        <Button whileHover={{ scale: 1.2 }}>Switch</Button>
+      </Btn>
     </Wrapper>
   );
 }

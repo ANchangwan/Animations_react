@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import { motion, useMotionValue, useTransform } from "framer-motion";
+import { motion, useMotionValue, useTransform, useScroll } from "framer-motion";
 import { useEffect, useRef } from "react";
 import Project from "./Project";
 
-const Wrapper = styled.div`
-  height: 100vh;
+const Wrapper = styled(motion.div)`
+  height: 500vh;
   width: 100vw;
   display: flex;
   justify-content: center;
@@ -48,15 +48,26 @@ const boxVariants = {
 
 function App() {
   const x = useMotionValue(0);
-  // const potato = useTransform(x, [-800, 0, 800], [2, 1, 0.1]);
-  useEffect(() => {
-    // x.onChange(() => console.log(x.get()));
-    x.onChange(() => console.log(x.get()));
-  }, [x]);
+  const rotateZ = useTransform(x, [-800, 800], [-360, 360]);
+  const gradient = useTransform(
+    x,
+    [-800, 800],
+    [
+      "linear-gradient(135deg, #3b91bc, #04a1cd)",
+
+      "linear-gradient(135deg, #58cb44, #dfd700)",
+    ]
+  );
+  const { scrollY, scrollYProgress } = useScroll();
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 5]);
+  // useEffect(() => {
+  //   scrollY.onChange(() => {
+  //     console.log(scrollY.get(), scrollYProgress.get());
+  //   });
+  // }, [scrollYProgress, scrollY]);
   return (
-    <Wrapper>
-      {/* <Box style={{ y }} drag="y" dragSnapToOrigin /> */}
-      <Project />
+    <Wrapper style={{ background: gradient }}>
+      <Box style={{ x, rotateZ, scale }} drag="x" dragSnapToOrigin />
     </Wrapper>
   );
 }
