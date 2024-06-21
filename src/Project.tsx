@@ -10,6 +10,12 @@ const Wrapper = styled.div`
   gap: 10px;
 `;
 
+const Overlay = styled(motion.div)`
+  background-color: rgba(0, 0, 0, 0.7);
+  width: 100%;
+  height: 100%;
+`;
+
 const Btn = styled.div`
   grid-column: span 2;
   width: 100%;
@@ -90,21 +96,21 @@ const circleVariants = {
 
 function Project() {
   const [change, setChange] = useState(true);
+  const [id, setId] = useState<null | string>("");
   const onClick = () => {
     setChange((current) => !current);
   };
   return (
     <Wrapper>
-      <AnimatePresence>
-        <Box custom={1} variants={boxVariant} whileHover="hover"></Box>
-        <Box custom={2} variants={boxVariant} whileHover="hover">
-          {change ? <Circle layoutId="circle" /> : null}
-        </Box>
-        <Box custom={3} variants={boxVariant} whileHover="hover">
-          {!change ? <Circle layoutId="circle" /> : null}
-        </Box>
-        <Box custom={4} variants={boxVariant} whileHover="hover"></Box>
-      </AnimatePresence>
+      <Box custom={1} variants={boxVariant} whileHover="hover"></Box>
+      <Box custom={2} variants={boxVariant} whileHover="hover">
+        {change ? <Circle layoutId="circle" /> : null}
+      </Box>
+      <Box custom={3} variants={boxVariant} whileHover="hover">
+        {!change ? <Circle layoutId="circle" /> : null}
+      </Box>
+      <Box custom={4} variants={boxVariant} whileHover="hover"></Box>
+      <Overlay></Overlay>
       <Btn>
         <Button
           style={{ color: change ? "#e74c3c" : "#2c3e50" }}

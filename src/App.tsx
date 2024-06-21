@@ -11,18 +11,10 @@ const Wrapper = styled(motion.div)`
   justify-content: center;
   align-items: center;
   background: linear-gradient(#3b91bc, #04a1cd);
-  display: flex;
-  flex-direction: column;
 `;
 
 const Box = styled(motion.div)`
-  width: 200px;
   height: 200px;
-  display: flex;
-  position: absolute;
-  top: 50px;
-  align-items: center;
-  justify-content: center;
   font-size: 25px;
   font-family: 500;
   background-color: rgba(255, 255, 255, 1);
@@ -30,37 +22,47 @@ const Box = styled(motion.div)`
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
 `;
 
-const boxVariants = {
-  entry: (custom: boolean) => {
-    return {
-      x: custom ? -500 : 500,
-      opacity: 0,
-      scale: 0,
-    };
-  },
-  center: {
-    opacity: 1,
-    scale: 1,
-    x: 0,
-    transition: { duration: 0.3 },
-  },
-  exit: (custom: boolean) => {
-    return {
-      x: custom ? 500 : -500,
-      opacity: 0,
-      scale: 0,
-      transition: { duration: 0.3 },
-    };
-  },
-};
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 50vw;
+  gap: 10px;
+  div:first-child,
+  div:last-child {
+    grid-column: span 2;
+  }
+`;
+const Overlay = styled(motion.div)`
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 function App() {
+  const [id, setId] = useState<null | string>(null);
   return (
     <Wrapper>
-      <Box></Box>
-      <Box></Box>
-      <Box></Box>
-      <Box></Box>
+      <Grid>
+        {["1", "2", "3", "4"].map((n) => (
+          <Box onClick={() => setId(n)} key={n} layoutId={n}></Box>
+        ))}
+      </Grid>
+      <AnimatePresence>
+        {id ? (
+          <Overlay
+            onClick={() => setId(null)}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <Box layoutId={id} style={{ width: 400, height: 300 }} />
+          </Overlay>
+        ) : null}
+      </AnimatePresence>
     </Wrapper>
   );
 }
