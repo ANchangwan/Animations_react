@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/Animations/static/js/main.3a38e2dc.js",
-    "index.html": "/Animations/index.html",
-    "main.3a38e2dc.js.map": "/Animations/static/js/main.3a38e2dc.js.map"
+    "main.js": "/Animations_react/static/js/main.ff321356.js",
+    "index.html": "/Animations_react/index.html",
+    "main.ff321356.js.map": "/Animations_react/static/js/main.ff321356.js.map"
   },
   "entrypoints": [
-    "static/js/main.3a38e2dc.js"
+    "static/js/main.ff321356.js"
   ]
 }
